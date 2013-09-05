@@ -2,12 +2,17 @@ from flask import Flask
 from flask.ext.script import Manager
 from flask.ext.sqlalchemy import SQLAlchemy
 from basic_app import config
+import sys
+import os
+# sys.path.append("/vagrant/basic_flask")
+print "called"
+
 
 db = SQLAlchemy()
 
 
 def load_models():
-    from basic_app.auth import models
+    from basic_app.users import models
 
 load_models()
 
@@ -17,9 +22,9 @@ def init_extensions(app):
 
 
 def init_views(app):
-    from basic_app import auth
+    from basic_app import users
 
-    app.register_blueprint(auth.bp, url_prefix="/auth")
+    app.register_blueprint(users.bp, url_prefix="/users")
 
 
 def create_app(config=config):
