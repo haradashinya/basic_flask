@@ -2,10 +2,6 @@ from flask import Flask
 from flask.ext.script import Manager
 from flask.ext.sqlalchemy import SQLAlchemy
 from basic_app import config
-import sys
-import os
-# sys.path.append("/vagrant/basic_flask")
-print "called"
 
 
 db = SQLAlchemy()
