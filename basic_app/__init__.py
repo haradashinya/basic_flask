@@ -1,3 +1,10 @@
+#coding: utf-8
+
+
+import os
+import sys
+#正しくmodelsを読み込む
+sys.path.append(os.getcwd())
 from flask import Flask
 from flask.ext.script import Manager
 from flask.ext.sqlalchemy import SQLAlchemy
