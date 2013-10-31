@@ -6,10 +6,6 @@ from basic_app.users.models import User
 from basic_app.videos.models import Video
 from flask.ext.sqlalchemy import SQLAlchemy
 
-
-
-
-
 class TestUser:
     @classmethod
     def setup_class(cls):

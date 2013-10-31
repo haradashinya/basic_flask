@@ -47,13 +47,6 @@ class Video(db.Model):
     created_date = db.Column(db.DateTime,default = datetime.datetime.utcnow())
     updated_date = db.Column(db.DateTime,default = datetime.datetime.utcnow())
 
-    @classmethod
-    def get_all(cls):
-        videos = db.session.query(Video).order_by(Video.created_date.desc()).all()
-        [video.merged_tag() for video in videos]
-        videos = [video for video in videos if video.img_path != ""]
-        return videos *10
-
     def __init__(self,title="",path="",desc = ""):
         self.title = title
         self.path = path
