@@ -26,13 +26,14 @@ def init_extensions(app):
 
 def init_views(app):
     from basic_app import users
-
-    app.register_blueprint(users.bp, url_prefix="/users")
+    app.register_blueprint(users.bp, url_prefix="/")
 
 
 def create_app(config=config):
     app = Flask(__name__)
     app.config.from_object(config)
+    app.secret_key = 'tekitouna himitu no kagi'
+
 
     init_extensions(app)
     init_views(app)
