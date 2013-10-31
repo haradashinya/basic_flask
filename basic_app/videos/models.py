@@ -43,11 +43,9 @@ class Video(db.Model):
     author_id = db.Column(db.Integer,db.ForeignKey("users.id"))
     has_voted = db.Column(db.Boolean,default = False)
     is_owner = db.Column(db.Boolean,default = False)
-    tags = []
     votes = db.relationship("Vote")
     created_date = db.Column(db.DateTime,default = datetime.datetime.utcnow())
     updated_date = db.Column(db.DateTime,default = datetime.datetime.utcnow())
-    tags = "lflfl"
 
     @classmethod
     def get_all(cls):
@@ -56,27 +54,7 @@ class Video(db.Model):
         videos = [video for video in videos if video.img_path != ""]
         return videos *10
 
-    @classmethod
-    def get_videos_by_tag_id(cls,tag_id,page=1,per_page=3):
-        vts = db.session.query(videotags).filter_by(tag_id = tag_id).all()
-        dd = []
-        for vt in vts:
-            video = db.session.query(Video).order_by(Video.created_date.desc())\
-                    .filter_by(id = vt.video_id).first()
-            video.merged_tag()
-            dd.append(video)
-
-        return dd
-
-
-
-    @classmethod
-    def get_videos_by_page(cls,page,PER_PAGE):
-        videos = cls.get_all()
-        return  videos[(page-1)*PER_PAGE:PER_PAGE*(page)]
-
-
-    def __init__(self,title,path,desc = ""):
+    def __init__(self,title="",path="",desc = ""):
         self.title = title
         self.path = path
         self.desc = desc
@@ -94,3 +72,11 @@ class Video(db.Model):
         return "<Video id:{0} title:{1} voted:{2}>".format(self.id,self.title,self.has_voted)
 
 
+
+    @classmethod
+    def load(cls,new_db):
+        """
+        change db for production
+        """
+        global db
+        db = new_db
