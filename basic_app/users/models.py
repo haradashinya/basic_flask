@@ -32,8 +32,3 @@ class User(db.Model):
         global db
         db = new_db
 
-
-
-
-
-
