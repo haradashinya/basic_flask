@@ -22,7 +22,6 @@ def login_view():
 @bp.route("login_github")
 def login_github():
     url =  github.get_authorize_url()
-    print(db.session.query(User).all())
     return redirect(url)
 
 @bp.route("users/github/callback")
@@ -34,19 +33,9 @@ def authorized():
     _session = github.get_auth_session(data=data)
     user_data = _session.get("user").json()
     u = User(user_data.get("name"),user_data.get("email",""))
-    try:
-        db.session.add(u)
-        db.session.commit()
-    except:
-        print("duplicate")
-        db.session.flush()
-        db.session.rollback()
-    finally:
-        obj = db.session.query(User).filter_by(name = user_data.get("name")).first()
-        session["user_id"] = obj.id
-
-    print("session id is")
-    print(session.get("user_id"))
+    u.save()
+    obj = db.session.query(User).filter_by(name = user_data.get("name")).first()
+    session["user_id"] = obj.id
     return redirect("/")
 
 
