@@ -14,12 +14,6 @@ class User(db.Model):
         self.name = name
         self.email = email
 
-    def hello(self):
-        print("called hello")
-        print(db)
-        pass
-
-
     def save(self):
         print("hello is")
         try:
@@ -32,6 +26,9 @@ class User(db.Model):
 
     @classmethod
     def load(cls,new_db):
+        """
+        change db for production
+        """
         global db
         db = new_db
 

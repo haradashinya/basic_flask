@@ -19,15 +19,11 @@ class TestUser:
         cls.db = db
         User.load(cls.db)
 
-
-
     def test_create(self):
         User.load(self.db)
         u = User(name="test",email="harada@gmail.com")
         u.save()
-
         fetched_user = self.db.session.query(User).filter_by(name ="test").first()
-
         assert fetched_user.name ==  "test"
 
 
@@ -37,6 +33,8 @@ class TestUser:
 
     @classmethod
     def teardown_class(cls):
-        print("end")
+        fetched_user = cls.db.session.query(User).filter_by(name ="test").first()
+        cls.db.session.delete(fetched_user)
+        cls.db.session.commit()
         pass
 
