@@ -13,6 +13,7 @@ global db
 db = SQLAlchemy()
 def load_models():
     from basic_app.users import models
+    from basic_app.videos import models
 
 load_models()
 
