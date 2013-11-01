@@ -40,9 +40,15 @@ class Tag(db.Model):
     @classmethod 
     def get_or_create(cls,tag_name):
         t = db.session.query(Tag).filter_by(title = tag_name).first()
-        print(db)
-        if t is not None:
-            print("calleld nred")
+        if t is None:
+            t = Tag(tag_name)
+            try:
+                db.session.add(t)
+                db.session.commit()
+            except:
+                print("err")
+                db.session.flush()
+                db.session.rollback()
         return t
 
 
