@@ -23,7 +23,9 @@ def init_extensions(app):
 
 def init_views(app):
     from basic_app import users
+    from basic_app import videos
     app.register_blueprint(users.bp, url_prefix="/")
+    app.register_blueprint(videos.bp,url_prefix="/videos")
 
 
 def create_app(config=config):
