@@ -18,6 +18,10 @@ github = OAuth2Service(
 def login_view():
     return render_template("login.html")
 
+@bp.route("mypage")
+def mypage_view():
+    u = db.session.query(User).get(session["user_id"])
+    return render_template("mypage.html",videos = u.videos)
 
 @bp.route("login_github")
 def login_github():

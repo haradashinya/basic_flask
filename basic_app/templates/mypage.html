@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+ここに編集可能な動画の一覧を表示する
+編集したい動画をクリックしてください。
+{{session["user_id"]}}
+
+<div class="videos">
+	{% for video in videos %}
+	<div class="video">
+		<h2><a href="/videos/{{video.id}}" target="_blank">{{video.title}}</a></h2>
+	</div>
+	{% endfor %}
+</div>
+
+
+
+{% endblock %}
