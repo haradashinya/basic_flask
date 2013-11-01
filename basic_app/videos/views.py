@@ -15,6 +15,8 @@ from flask import render_template,redirect,request,session
 
 @bp.route("/new_video",methods=["GET","POST"])
 def new_video_view():
+	if session.get("user_id") == None:
+		return "Sorry,You need login!"
 	return render_template("new_video.html")
 
 
@@ -23,5 +25,17 @@ def hello():
 	if request.method == "GET":
 		return "show all videos"
 	elif request.method == "POST":
+		form = request.form
+		title = request.form.get("title")
+		tags = request.form.get("tags","python").split(",")
+		path = request.form.get("url")
+
+
+		user = db.session.query(User).get(session["user_id"])
+		video = Video(title,path)
+		user.videos.append(video)
+		db.session.add(video)
+		db.session.commit()
+
 		return "created"
 
