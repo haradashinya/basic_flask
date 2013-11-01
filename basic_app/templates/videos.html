@@ -5,10 +5,12 @@
 <div class="videos">
 {% for video in videos %}
 <div class="video">
-<h2>{{video.title}}</h2>
+<h2><a href="{{video.path}}" target="_blank">{{video.title}}</a></h2>
+<p>
 {% for tag in video.tags %}
 <a href="/videos?tag={{tag.title}}">{{tag.title}}</a>
 {% endfor %}
+</p>
 </div>
 {% endfor %}
 </div>
