@@ -36,7 +36,7 @@ def authorized():
     u.save()
     obj = db.session.query(User).filter_by(name = user_data.get("name")).first()
     session["user_id"] = obj.id
-    return redirect("/")
+    return redirect("/videos")
 
 
 
