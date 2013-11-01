@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+ここに動画の一覧を表示する
+
+<div class="videos">
+{% for video in videos %}
+<div class="video">
+<h2>{{video.title}}</h2>
+{% for tag in video.tags %}
+<a href="/videos?tag={{tag.title}}">{{tag.title}}</a>
+{% endfor %}
+</div>
+{% endfor %}
+</div>
+
+
+
+{% endblock %}

@@ -32,6 +32,18 @@ class Tag(db.Model):
 
     def __repr__(self):
         return "<Tag:{0},title:{1}>".format(self.id,self.title)
+        
+    @classmethod
+    def hello(cls):
+        print(db)
+
+    @classmethod 
+    def get_or_create(cls,tag_name):
+        t = db.session.query(Tag).filter_by(title = tag_name).first()
+        print(db)
+        if t is not None:
+            print("calleld nred")
+        return t
 
 
 class Video(db.Model):
@@ -65,6 +77,7 @@ class Video(db.Model):
 
     def __repr__(self):
         return "<Video id:{0} title:{1} voted:{2}>".format(self.id,self.title,self.has_voted)
+
 
 
 
