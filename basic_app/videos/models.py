@@ -33,10 +33,6 @@ class Tag(db.Model):
     def __repr__(self):
         return "<Tag:{0},title:{1}>".format(self.id,self.title)
         
-    @classmethod
-    def hello(cls):
-        print(db)
-
     @classmethod 
     def get_or_create(cls,tag_name):
         t = db.session.query(Tag).filter_by(title = tag_name).first()
@@ -67,11 +63,20 @@ class Video(db.Model):
     tags = db.relationship('Tag', secondary=videotags)
 
 
-    def __init__(self,title="",path="",desc = ""):
+    def __init__(self,title="",path="",desc = "",tags = tags):
         self.title = title
         self.path = path
         self.desc = desc
         self.created_date = datetime.datetime.utcnow()
+
+    def add_tags(self,tag_names):
+        for tag_name in list(set(tag_names)):
+            t = Tag.get_or_create(tag_name)
+            self.tags.append(t)
+            db.session.add(t)
+        db.session.commit()
+
+
 
     def vote_up(self,user_id):
         vote = Vote()
@@ -80,6 +85,14 @@ class Video(db.Model):
         db.session.add(vote)
         db.session.commit()
 
+
+    def save(self):
+        try:
+            db.session.add(self)
+            db.session.commit()
+        except:
+            db.session.flush()
+            db.session.rollback()
 
     def __repr__(self):
         return "<Video id:{0} title:{1} voted:{2}>".format(self.id,self.title,self.has_voted)

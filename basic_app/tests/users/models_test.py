@@ -35,3 +35,4 @@ class TestUser:
         cls.db.session.commit()
         pass
 
+

@@ -22,7 +22,6 @@ def hello():
 	if request.method == "GET":
 		vts = db.session.query(videotags).all()
 		print(vts)
-		Tag.hello()
 		tag_name = request.args.get("tag")
 		# タグが存在していると,マッチした動画しか返さないようにする。
 		if tag_name:
@@ -41,20 +40,14 @@ def hello():
 	elif request.method == "POST":
 		default_url = "http://www.youtube.com/watch?v=hR5Pa6jxOSY"
 		form = request.form
-		title = request.form.get("title") or "okamurayasuyuki"
-		tag_names = request.form.get("tags").split(",")
+		title = form.get("title") or "okamurayasuyuki"
+		tag_names = form.get("tags").split(",")
 		path = request.form.get("url") or default_url
-
 		user = db.session.query(User).get(session["user_id"])
 		video = Video(title= title,path=path)
 		user.videos.append(video)
 		db.session.add(video)
-		db.session.commit()
-
-		for tag_name in list(set(tag_names)):
-			t = Tag.get_or_create(tag_name)
-			video.tags.append(t)
-			db.session.add(t)
+		video.add_tags(tag_names)
 		db.session.commit()
 
 
