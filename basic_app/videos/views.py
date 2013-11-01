@@ -16,6 +16,10 @@ def new_video_view():
 		return "Sorry,You need login!"
 	return render_template("new_video.html")
 
+@bp.route("/<int:video_id>")
+def video_view(video_id):
+	video = db.session.query(Video).get(video_id)
+	return render_template("edit_video.html",video = video)
 
 @bp.route("",methods=["GET","POST"])
 def hello():

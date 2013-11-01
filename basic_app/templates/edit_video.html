@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+ここに編集可能な動画の一覧を表示する
+
+
+<h2>Edit</h2>
+<form method="POST" action="/videos">
+<input type="text" name="title" value='{{video.title}}'placeholder="type title"><br>
+<input type="text" name="url" value="{{video.path}}" placeholder="type url here"><br>
+{% for tag in video.tags %}
+<p>
+<input type="text" name="tag" value="{{tag.title}}">
+</p>
+{% endfor %}
+
+<input type="submit">
+
+</form>
+
+
+{% endblock %}
