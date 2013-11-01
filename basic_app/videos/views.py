@@ -25,13 +25,15 @@ def hello():
 	if request.method == "GET":
 		return "show all videos"
 	elif request.method == "POST":
+		default_url = "http://www.youtube.com/watch?v=hR5Pa6jxOSY"
 		form = request.form
-		title = request.form.get("title")
-		tag_names = request.form.get("tags").split(",")
-		path = request.form.get("url")
+		title = request.form.get("title") or "okamurayasuyuki"
+		print(title)
+		tag_names = request.form.get("tags").split(",") or "python"
+		path = request.form.get("url") or default_url
+		
 		user = db.session.query(User).get(session["user_id"])
-		video = Video(title,path)
-
+		video = Video(title= title,path=path)
 		user.videos.append(video)
 		db.session.add(video)
 		db.session.commit()
@@ -42,9 +44,7 @@ def hello():
 			db.session.add(t)
 		db.session.commit()
 
-		for t in db.session.query(Tag).all():
-			print(t.videos)
-			print(t.id)
+		print(db.session.query(Video).all())
 
 
 

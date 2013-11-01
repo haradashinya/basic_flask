@@ -23,7 +23,7 @@ class Tag(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     # videos = db.relationship('Video', secondary=videotags)
 
-    title = db.Column(db.String(30),unique=True)
+    title = db.Column(db.String(30))
 
     videos = db.relationship("Video", secondary=videotags)
 
