@@ -21,10 +21,11 @@ class Vote(db.Model):
 class Tag(db.Model):
     __tablename__ = "tags"
     id = db.Column(db.Integer,primary_key=True)
-    videos = db.relationship('Video', secondary=videotags,
-                             backref=db.backref("videos",lazy="dynamic"))
+    # videos = db.relationship('Video', secondary=videotags)
 
     title = db.Column(db.String(30),unique=True)
+
+    videos = db.relationship("Video", secondary=videotags)
 
     def __init__(self,title):
         self.title = title
@@ -38,7 +39,6 @@ class Video(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     title = db.Column(db.String(30))
     path = db.Column(db.String(120),default = "")
-    img_path = db.Column(db.String(120),default = "")
     desc = db.Column(db.String(400),default = "")
     author_id = db.Column(db.Integer,db.ForeignKey("users.id"))
     has_voted = db.Column(db.Boolean,default = False)
@@ -46,6 +46,8 @@ class Video(db.Model):
     votes = db.relationship("Vote")
     created_date = db.Column(db.DateTime,default = datetime.datetime.utcnow())
     updated_date = db.Column(db.DateTime,default = datetime.datetime.utcnow())
+    tags = db.relationship('Tag', secondary=videotags)
+
 
     def __init__(self,title="",path="",desc = ""):
         self.title = title
