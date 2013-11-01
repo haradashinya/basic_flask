@@ -36,9 +36,8 @@ def hello():
 		else:
 			videos = db.session.query(Video).all()
 
-
-
 		return render_template("videos.html",videos= videos)
+		
 	elif request.method == "POST":
 		default_url = "http://www.youtube.com/watch?v=hR5Pa6jxOSY"
 		form = request.form
@@ -53,15 +52,11 @@ def hello():
 		db.session.commit()
 
 		for tag_name in list(set(tag_names)):
-			Tag.get_or_create(tag_name)
-			t = db.session.query(Tag).filter_by(title = tag_name).first()
-			if t is None:
-				t = Tag(tag_name)
+			t = Tag.get_or_create(tag_name)
 			video.tags.append(t)
 			db.session.add(t)
 		db.session.commit()
 
-		print(db.session.query(Video).all())
 
 
 
